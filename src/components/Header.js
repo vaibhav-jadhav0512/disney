@@ -1,6 +1,39 @@
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import {
+  selectUserName,
+  setUserLoginDetails,
+  selectUserPhoto,
+} from "../features/user/userSlice";
+import { auth, provider } from "../firebase";
 
 const Header = (props) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const username = useSelector(selectUserName);
+  const userPhoto = useSelector(selectUserPhoto);
+  const handleAuth = () => {
+    auth
+      .signInWithPopup(provider)
+      .then((result) => {
+        setUser(result.user);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
+
+  const setUser = (user) => {
+    dispatch(
+      setUserLoginDetails({
+        name: user.displayName,
+        email: user.email,
+        photo: user.photoURL,
+      })
+    );
+  };
+
   return (
     <Nav>
       <Logo>
@@ -32,6 +65,7 @@ const Header = (props) => {
           <span>SERIES</span>
         </a>
       </NavMenu>
+      <Login onClick={handleAuth}>Login</Login>
     </Nav>
   );
 };
@@ -125,9 +159,9 @@ const NavMenu = styled.div`
     }
   }
 
-  /* @media (max-width: 768px) {
+  @media (max-width: 768px) {
     display: none;
-  } */
+  }
 `;
 
 const Login = styled.a`
