@@ -96,10 +96,11 @@ const Description = styled.p`
 `;
 
 const CTALogoTwo = styled.img`
-    max-width: 600px;
-    margin-bottom: 20px;
-    display: inline-block;
-    vertical-align: bottom;
+  max-width: 600px;
+  margin-bottom: 20px;
+  display: inline-block;
+  vertical-align: bottom;
+  width: 100%;
 `;
 
 export default Login;
